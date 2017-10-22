@@ -1,4 +1,5 @@
 const electron = require('electron')
+const telnet = require('./telnet');
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
