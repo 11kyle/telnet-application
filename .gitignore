@@ -1,2 +1,3 @@
 node_modules
 lib/commands.js
+*.DS_Store
