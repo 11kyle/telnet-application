@@ -1,6 +1,5 @@
 const electron = require('electron')
 //const {shell} = require('electron');
-
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
@@ -8,28 +7,7 @@ const BrowserWindow = electron.BrowserWindow
 
 const path = require('path')
 const url = require('url')
-
-
-const net = require('net')
-
-const port = 8888
-const host = 'localhost'
-var socket = net.createConnection({port, host}, () => {
-  // connect listener
-  console.log('connected');
-});
-
-// Ace of spades
-socket.write('rng vals 1 1 0');
-
-socket.on('data', (data) => {
-  console.log(data.toString('utf-8'));
-})
-
-socket.on('close', function() {
-  console.log('connection closed');
-})
-
+const pad = require('pad');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
