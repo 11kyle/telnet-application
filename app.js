@@ -1,0 +1,73 @@
+var app = new Vue({
+	el: '#app',
+	data: {
+		doors: [
+			{name: 'All', syntax: 'all', isOpen: true},
+			{name: 'Main', syntax: 'm', isOpen: true},
+			{name: 'Cage', syntax: 'c', isOpen: true},
+			{name: 'Front', syntax: 'f', isOpen: true},
+			{name: 'Top', syntax: 't', isOpen: true},
+			{name: 'Drop', syntax: 'd', isOpen: true},
+			{name: 'Bill', syntax: 'b', isOpen: true},
+			{name: 'Processor', syntax: 'x', isOpen: true},
+			{name: 'Spare', syntax: 's', isOpen: true}
+		],
+		commands: [
+			{name: 'Spin', syntax: 'spin'},
+			{name: 'Repeat Bet', syntax: 'spin'},
+			{name: 'Max Bet', syntax: 'max bet'},
+			{name: 'Attendant', syntax: 'jkpt res pressed\njkpt res released'},	// beta test this!
+			{name: 'W2G', syntax: 'w2g pressed\nw2g released'},	// beta test this!
+			{name: 'Cashout', syntax: 'cashout'},
+			{name: 'Service', syntax: 'change'},
+			{name: 'Toggle RNG', syntax: 'tog rng'}
+		],
+		currency: [
+			{name: '1'},
+			{name: '2'},
+			{name: '5'},
+			{name: '10'},
+			{name: '20'},
+			{name: '50'},
+			{name: '100'}
+		],
+		input: '',
+		output: ''
+	},
+	methods: {
+		sendCommand: function(value) {
+
+			for (var i = 0; i < this.doors.length; i++) {
+				if (value.name.toLowerCase() === this.doors[i].name.toLowerCase()) {	// all | main | cage | etc..
+
+					if (value.isOpen === true) {
+						console.log(this.doors[i].syntax + ' cl');
+						this.output = this.output + this.doors[i].syntax + ' cl\n';
+					} else {
+						console.log(this.doors[i].syntax + ' op');
+						this.output = this.output + this.doors[i].syntax + ' op\n';
+					}
+					break;
+				}
+			}
+			for (var i = 0; i < this.commands.length; i++) {
+				if (value.name.toLowerCase() === this.commands[i].name.toLowerCase()) {		// spin | repeat bet | max bet | etc..
+					console.log(this.commands[i].syntax);
+					this.output = this.output + this.commands[i].syntax + '\n';
+					break;
+				}
+			}
+			for (var i = 0; i < this.currency.length; i++) {
+				if (value.name.toLowerCase() === this.currency[i].name.toLowerCase()) {		// spin | repeat bet | max bet | etc..
+					console.log('bill in\n' + this.currency[i].name);
+					this.output = this.output + 'bill in\n' + this.currency[i].name + '\n';
+					break;
+				}
+			}
+
+			// Keep textarea scrolled to the bottom
+			var otpt = document.getElementById('output');
+			otpt.scrollTop = otpt.scrollHeight
+		}
+	}
+})

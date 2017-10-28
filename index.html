@@ -1,19 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	  <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet">
+	  <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-  </body>
+    <div id="app" class="container">
 
-  <script>
-    // You can also require other files to run in this process
-    require('./lib/renderer.js')
-  </script>
+		<div class="row">
+			<div class="col-sm-12">
+				<form class="form-inline">
+					<label for="ipAddress">IP Address:</label>
+					<input id="ipAddress" type="text" class="form-control" placeholder="127.0.0.1">
+					<label for="portNumber">Port:</label>
+					<input class="form-control port" value="5741" type="text">
+					<span class="input-group-btn">
+						<button class="btn btn-secondary" type="button">Connect to EGM</button>
+					</span>
+				</form>
+			</div>
+		</div>
+
+		<div class="row main">
+			<div class="col-sm-2">
+				<div v-for="value in doors" class="doors">
+					<p>{{ value.name }}</p>
+					<button v-on:click="value.isOpen=true, sendCommand(value)" class="btn btn-secondary btn-sm"><img src="icons8-Door Closed Filled-50.png"></button><button v-on:click="value.isOpen=false, sendCommand(value)" class="btn btn-secondary btn-sm"><img src="icons8-Door Opened Filled-50.png"></button>
+				</div>
+			</div>
+
+			<div class="col-sm-2">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="commands">
+							<p>Commands</p>
+							<div class="list-group">
+								<button v-for="value in commands" v-on:click="sendCommand(value)" type="button" class="list-group-item list-group-item-action">{{ value.name }}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="currency">
+							<p>Currency</p>
+							<div class="list-group">
+								<button v-for="value in currency" v-on:click="sendCommand(value)" type="button" class="list-group-item list-group-item-action">${{ value.name }}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-3">
+				<div class="input-area">
+					<p>Input</p>
+					<textarea id="input" class="form-control">{{ input }}</textarea>
+				</div>
+			</div>
+			<div class="col-sm-5">
+				<div class="input-area">
+					<p>Output</p>
+					<textarea id="output" class="form-control" disabled>{{ output }}</textarea>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script src="vue.js"></script>
+	<script src="app.js"></script>
+    <script>
+		// You can also require other files to run in this process
+		require('./lib/renderer.js')
+	</script>
+  </body>
 </html>
