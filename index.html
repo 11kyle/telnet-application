@@ -63,9 +63,17 @@
 					<p>Input</p>
 					<textarea id="input" class="form-control">{{ input }}</textarea>
 				</div>
-			</div>
+        <div class="row input-area-btns">
+          <div class="col-sm-6">
+            <button class="btn btn-secondary btn-block" type="button">Send</button>
+          </div>
+          <div class="col-sm-6">
+            <button class="btn btn-secondary btn-block" type="button">Clear</button>
+          </div>
+        </div>
+      </div>
 			<div class="col-sm-5">
-				<div class="input-area">
+				<div class="output-area">
 					<p>Output</p>
 					<textarea id="output" class="form-control" disabled>{{ output }}</textarea>
 				</div>

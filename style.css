@@ -25,14 +25,25 @@ p {
   font-size: 12px;
 }
 img {
-  max-width: 26px;
+  max-width: 25px;
   margin: 4px 10px;
 }
 textarea.form-control {
-  height: 550px;
+  height: 530px;
   font-size: 12px;
   resize: none;
   border: 1px solid rgba(0,0,0,.3);
+}
+#input {
+  height: 504px;
+  margin-bottom: 4px;
+}
+.input-area-btns > .col-sm-6:first-child {
+  padding-right: 2px;
+
+}
+.input-area-btns > .col-sm-6:last-child {
+  padding-left: 2px;
 }
 .list-group-item {
   padding: 5px 8px;
