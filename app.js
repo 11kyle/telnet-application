@@ -36,7 +36,7 @@ var app = new Vue({
 	},
 	methods: {
 		sendCommand: function(value) {
-
+			// Handle door buttons
 			for (var i = 0; i < this.doors.length; i++) {
 				if (value.name.toLowerCase() === this.doors[i].name.toLowerCase()) {	// all | main | cage | etc..
 
@@ -50,6 +50,7 @@ var app = new Vue({
 					break;
 				}
 			}
+			// Handle command buttons
 			for (var i = 0; i < this.commands.length; i++) {
 				if (value.name.toLowerCase() === this.commands[i].name.toLowerCase()) {		// spin | repeat bet | max bet | etc..
 					console.log(this.commands[i].syntax);
@@ -57,6 +58,7 @@ var app = new Vue({
 					break;
 				}
 			}
+			// Handle currency buttons
 			for (var i = 0; i < this.currency.length; i++) {
 				if (value.name.toLowerCase() === this.currency[i].name.toLowerCase()) {		// spin | repeat bet | max bet | etc..
 					console.log('bill in\n' + this.currency[i].name);
@@ -68,6 +70,14 @@ var app = new Vue({
 			// Keep textarea scrolled to the bottom
 			var otpt = document.getElementById('output');
 			otpt.scrollTop = otpt.scrollHeight
+		},
+		clearOutput: function() {
+			// Handle output clear button
+			this.output = '';
+		},
+		clearInput: function() {
+			// Handle input clear button
+			this.input = '';
 		}
 	}
 })

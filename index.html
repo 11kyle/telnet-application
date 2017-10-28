@@ -61,14 +61,14 @@
 			<div class="col-sm-3">
 				<div class="input-area">
 					<p>Input</p>
-					<textarea id="input" class="form-control">{{ input }}</textarea>
+					<textarea id="input" class="form-control" v-model="input"></textarea>
 				</div>
         <div class="row input-area-btns">
           <div class="col-sm-6">
             <button class="btn btn-secondary btn-block" type="button">Send</button>
           </div>
           <div class="col-sm-6">
-            <button class="btn btn-secondary btn-block" type="button">Clear</button>
+            <button v-on:click="clearInput()" class="btn btn-secondary btn-block" type="button">Clear</button>
           </div>
         </div>
       </div>
@@ -77,6 +77,11 @@
 					<p>Output</p>
 					<textarea id="output" class="form-control" disabled>{{ output }}</textarea>
 				</div>
+        <div class="row">
+          <div class="col-sm-12">
+            <button v-on:click="clearOutput()" class="btn btn-secondary btn-block" type="button">Clear</button>
+          </div>
+        </div>
 			</div>
 		</div>
 
