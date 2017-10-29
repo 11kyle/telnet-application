@@ -1,3 +1,5 @@
+const pad = require('./lib/pad');
+
 var app = new Vue({
 	el: '#app',
 	data: {
@@ -78,6 +80,21 @@ var app = new Vue({
 		clearInput: function() {
 			// Handle input clear button
 			this.input = '';
+		},
+		connectTelnet: function() {
+			//connect to EGM
+			var ip = document.getElementById('ipAddress').value;
+			var prt = document.getElementById('port').value;
+
+			//not sure if this is working
+			if(pad.connect({host: ip, port: prt})) {
+				//set label to connected
+				this.output += 'connected';
+			}
+			else {
+				//set label to disconnected
+				this.output += 'failed to connect';
+			}
 		}
 	}
 })

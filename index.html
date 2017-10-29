@@ -19,9 +19,9 @@
 					<label for="ipAddress">IP Address:</label>
 					<input id="ipAddress" type="text" class="form-control" placeholder="127.0.0.1">
 					<label for="portNumber">Port:</label>
-					<input class="form-control port" value="5741" type="text">
+					<input id="port" class="form-control port" value="5741" type="text">
 					<span class="input-group-btn">
-						<button class="btn btn-secondary" type="button">Connect to EGM</button>
+						<button v-on:click="connectTelnet()" class="btn btn-secondary" type="button">Connect to EGM</button>
 					</span>
 				</form>
 			</div>
