@@ -108,6 +108,10 @@ var app = new Vue({
 				self.output += 'Error occurred\n';
 			});
 
+			connection.on('data', function(data) {
+				self.output += data.toString('utf-8') + '\n';
+			});
+
 			connection.connect({ip, prt});
 		}
 	}
