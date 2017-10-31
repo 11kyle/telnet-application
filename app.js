@@ -1,4 +1,5 @@
 const Pad = require('./lib/pad');
+var connection = null;
 
 var app = new Vue({
 	el: '#app',
@@ -18,20 +19,20 @@ var app = new Vue({
 			{name: 'Spin', syntax: 'spin'},
 			{name: 'Repeat Bet', syntax: 'spin'},
 			{name: 'Max Bet', syntax: 'max bet'},
-			{name: 'Attendant', syntax: 'jkpt res pressed\njkpt res released'},	// beta test this!
-			{name: 'W2G', syntax: 'w2g pressed\nw2g released'},	// beta test this!
+			{name: 'Attendant', syntax: 'jkpt res pressed\njkpt res released'},
+			{name: 'W2G', syntax: 'w2g pressed\nw2g released'},
 			{name: 'Cashout', syntax: 'cashout'},
 			{name: 'Service', syntax: 'change'},
 			{name: 'Toggle RNG', syntax: 'tog rng'}
 		],
 		currency: [
-			{name: '1'},
-			{name: '2'},
-			{name: '5'},
-			{name: '10'},
-			{name: '20'},
-			{name: '50'},
-			{name: '100'}
+			{name: '1', syntax: '100'},
+			{name: '2', syntax: '200'},
+			{name: '5', syntax: '500'},
+			{name: '10', syntax: '1000'},
+			{name: '20', syntax: '2000'},
+			{name: '50', syntax: '5000'},
+			{name: '100', syntax: '10000'}
 		],
 		input: '',
 		output: ''
@@ -39,15 +40,19 @@ var app = new Vue({
 	methods: {
 		sendCommand: function(value) {
 			// Handle door buttons
+			var command = '';
+
 			for (var i = 0; i < this.doors.length; i++) {
 				if (value.name.toLowerCase() === this.doors[i].name.toLowerCase()) {	// all | main | cage | etc..
 
 					if (value.isOpen === true) {
 						console.log(this.doors[i].syntax + ' cl');
 						this.output = this.output + this.doors[i].syntax + ' cl\n';
+						command = this.doors[i].syntax + ' cl';
 					} else {
 						console.log(this.doors[i].syntax + ' op');
 						this.output = this.output + this.doors[i].syntax + ' op\n';
+						command = this.doors[i].syntax + ' op';
 					}
 					break;
 				}
@@ -57,17 +62,21 @@ var app = new Vue({
 				if (value.name.toLowerCase() === this.commands[i].name.toLowerCase()) {		// spin | repeat bet | max bet | etc..
 					console.log(this.commands[i].syntax);
 					this.output = this.output + this.commands[i].syntax + '\n';
+					command = this.commands[i].syntax;
 					break;
 				}
 			}
 			// Handle currency buttons
 			for (var i = 0; i < this.currency.length; i++) {
 				if (value.name.toLowerCase() === this.currency[i].name.toLowerCase()) {		// spin | repeat bet | max bet | etc..
-					console.log('bill in\n' + this.currency[i].name);
-					this.output = this.output + 'bill in\n' + this.currency[i].name + '\n';
+					console.log('bill in\n' + this.currency[i].syntax);
+					this.output = this.output + 'bill in\n' + this.currency[i].syntax + '\n';
+					command = 'bill in\n' + this.currency[i].syntax;
 					break;
 				}
 			}
+
+			connection.sendCommand(command);
 
 			// Keep textarea scrolled to the bottom
 			var otpt = document.getElementById('output');
@@ -84,15 +93,10 @@ var app = new Vue({
 		connectTelnet: function() {
 			//connect to EGM
 			var ip = document.getElementById('ipAddress').value;
-			var prt = document.getElementById('port').value;
+			var port = document.getElementById('port').value;
 
-			var connection = new Pad();
+			connection = new Pad();
 			var self = this;
-
-			var obj = {
-				host: ip,
-				port: prt
-			}
 
 			connection.on('connect', function() {
 				self.output += 'Connected\n';
@@ -110,9 +114,13 @@ var app = new Vue({
 
 			connection.on('data', function(data) {
 				self.output += data.toString('utf-8') + '\n';
+
+				// Keep textarea scrolled to the bottom
+				var otpt = document.getElementById('output');
+				otpt.scrollTop = otpt.scrollHeight
 			});
 
-			connection.connect({ip, prt});
+			connection.connect({ip, port});
 		}
 	}
 })
