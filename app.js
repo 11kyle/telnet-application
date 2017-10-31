@@ -1,4 +1,4 @@
-const pad = require('./lib/pad');
+const Pad = require('./lib/pad');
 
 var app = new Vue({
 	el: '#app',
@@ -86,15 +86,29 @@ var app = new Vue({
 			var ip = document.getElementById('ipAddress').value;
 			var prt = document.getElementById('port').value;
 
-			//not sure if this is working
-			if(pad.connect({host: ip, port: prt})) {
-				//set label to connected
-				this.output += 'connected';
+			var connection = new Pad();
+			var self = this;
+
+			var obj = {
+				host: ip,
+				port: prt
 			}
-			else {
-				//set label to disconnected
-				this.output += 'failed to connect';
-			}
+
+			connection.on('connect', function() {
+				self.output += 'Connected\n';
+				//modify label to be connected
+			});
+
+			connection.on('close', function() {
+				self.output += 'Connection closed\n';
+				//modify label to be disconnected
+			});
+
+			connection.on('error', function() {
+				self.output += 'Error occurred\n';
+			});
+
+			connection.connect({ip, prt});
 		}
 	}
 })
