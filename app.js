@@ -1,39 +1,13 @@
 const Pad = require('./lib/pad');
+const cmds = require('./lib/commands');
 var connection = null;
 
 var app = new Vue({
 	el: '#app',
 	data: {
-		doors: [
-			{name: 'All', syntax: 'all', isOpen: true},
-			{name: 'Main', syntax: 'm', isOpen: true},
-			{name: 'Cage', syntax: 'c', isOpen: true},
-			{name: 'Front', syntax: 'f', isOpen: true},
-			{name: 'Top', syntax: 't', isOpen: true},
-			{name: 'Drop', syntax: 'd', isOpen: true},
-			{name: 'Bill', syntax: 'b', isOpen: true},
-			{name: 'Processor', syntax: 'x', isOpen: true},
-			{name: 'Spare', syntax: 's', isOpen: true}
-		],
-		commands: [
-			{name: 'Spin', syntax: 'spin'},
-			{name: 'Repeat Bet', syntax: 'spin'},
-			{name: 'Max Bet', syntax: 'max bet'},
-			{name: 'Attendant', syntax: 'jkpt res pressed\njkpt res released'},
-			{name: 'W2G', syntax: 'w2g pressed\nw2g released'},
-			{name: 'Cashout', syntax: 'cashout'},
-			{name: 'Service', syntax: 'change'},
-			{name: 'Toggle RNG', syntax: 'tog rng'}
-		],
-		currency: [
-			{name: '1', syntax: '100'},
-			{name: '2', syntax: '200'},
-			{name: '5', syntax: '500'},
-			{name: '10', syntax: '1000'},
-			{name: '20', syntax: '2000'},
-			{name: '50', syntax: '5000'},
-			{name: '100', syntax: '10000'}
-		],
+		doors: cmds.doorsCmd(),
+		commands: cmds.commandsCmds(),
+		currency: cmds.currencyCmds(),
 		input: '',
 		output: ''
 	},
@@ -76,7 +50,12 @@ var app = new Vue({
 				}
 			}
 
-			connection.sendCommand(command);
+			if(connection) {
+				connection.sendCommand(command);
+			}
+			else {
+				this.output += 'Not Connected\n';
+			}
 
 			// Keep textarea scrolled to the bottom
 			var otpt = document.getElementById('output');
