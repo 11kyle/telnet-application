@@ -17,22 +17,23 @@
 			<div class="col-sm-12">
 				<form class="form-inline">
 					<label for="ipAddress">IP Address:</label>
-					<input id="ipAddress" type="text" class="form-control" placeholder="127.0.0.1">
-					<label for="portNumber">Port:</label>
+					<input id="ipAddress" type="text" class="form-control" value="127.0.0.1">
+					<label class="port" for="port">Port:</label>
 					<input id="port" class="form-control port" value="5741" type="text">
-					<span class="input-group-btn">
-						<button v-on:click="connectTelnet()" class="btn btn-secondary" type="button">Connect to EGM</button>
-					</span>
-				</form>
+					<button v-on:click="connectTelnet()" class="btn btn-secondary port" type="button">Connect to EGM</button>
+          <p class="text-right">{{ isConnected }}</p>
+        </form>
 			</div>
 		</div>
 
 		<div class="row main">
 			<div class="col-sm-2">
-				<div v-for="value in doors" class="doors">
-					<p>{{ value.name }}</p>
-					<button v-on:click="value.isOpen=true, sendCommand(value)" class="btn btn-secondary btn-sm"><img src="icons8-Door Closed Filled-50.png"></button><button v-on:click="value.isOpen=false, sendCommand(value)" class="btn btn-secondary btn-sm"><img src="icons8-Door Opened Filled-50.png"></button>
-				</div>
+				<div v-for="value in commands" class="doors">
+          <div v-if="value.type==='door'">
+					  <p>{{ value.name }}</p>
+					  <button v-on:click="value.isOpen=true, sendCommand(value)" class="btn btn-secondary btn-sm"><img src="icons8-Door Closed Filled-50.png"></button><button v-on:click="value.isOpen=false, sendCommand(value)" class="btn btn-secondary btn-sm"><img src="icons8-Door Opened Filled-50.png"></button>
+          </div>
+        </div>
 			</div>
 
 			<div class="col-sm-2">
@@ -41,7 +42,7 @@
 						<div class="commands">
 							<p>Commands</p>
 							<div class="list-group">
-								<button v-for="value in commands" v-on:click="sendCommand(value)" type="button" class="list-group-item list-group-item-action">{{ value.name }}</button>
+								<button v-for="value in commands" v-if="value.type==='command'" v-on:click="sendCommand(value)" type="button" class="list-group-item list-group-item-action">{{ value.name }}</button>
 							</div>
 						</div>
 					</div>
@@ -51,7 +52,7 @@
 						<div class="currency">
 							<p>Currency</p>
 							<div class="list-group">
-								<button v-for="value in currency" v-on:click="sendCommand(value)" type="button" class="list-group-item list-group-item-action">${{ value.name }}</button>
+								<button v-for="value in commands" v-if="value.type==='currency'" v-on:click="sendCommand(value)" type="button" class="list-group-item list-group-item-action">${{ value.name }}</button>
 							</div>
 						</div>
 					</div>

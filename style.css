@@ -85,10 +85,13 @@ label {
 .col-sm-2, .col-sm-3, .col-sm-5 {
   padding: 0 6px;
 }
-input.port {
-  border-radius: .25rem 0 0 .25rem;
-}
 .doors button {
   margin-bottom: 2px;
   margin-right: 2px;
+}
+button.port {
+  margin: 0 4px;
+}
+label.port {
+  margin-left: 4px;
 }
