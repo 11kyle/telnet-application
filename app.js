@@ -61,6 +61,16 @@ var app = new Vue({
 				this.output += 'Disconnected\n';
 			}
 
+<<<<<<< HEAD
+=======
+			if(connection) {
+				connection.sendCommand(command);
+			}
+			else {
+				this.output += 'Not Connected\n';
+			}
+
+>>>>>>> origin/master
 			// Keep textarea scrolled to the bottom
 			var otpt = document.getElementById('output');
 			otpt.scrollTop = otpt.scrollHeight;
