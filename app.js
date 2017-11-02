@@ -22,27 +22,19 @@ var app = new Vue({
 						case 'door':
 								if (value.isOpen === true) {
 									command = this.commands[i].syntax + ' cl';
-									console.log(command);
-									this.output = this.output + command + '\n';
 								} else {
 									command = this.commands[i].syntax + ' op';
-									console.log(command);
-									this.output = this.output + command + '\n';
 								}
 								break;
 							break;
 						// Handle commands
 						case 'command':
 								command = this.commands[i].syntax;
-								console.log(command);
-								this.output = this.output + command + '\n';
 								break;
 							break;
 						// Handle currency
 						case 'currency':
 								command = 'bill in\n' + this.commands[i].syntax;
-								console.log(command);
-								this.output = this.output + command + '\n';
 								break;
 							break;
 						// Default
@@ -50,6 +42,8 @@ var app = new Vue({
 							console.log('Do nothing');
 							break;
 					}
+					console.log(command);
+					this.output = this.output + command + '\n';
 				}
 			}
 
