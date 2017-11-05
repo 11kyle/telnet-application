@@ -40,7 +40,7 @@ var app = new Vue({
 							break;
 					}
 					console.log(command);
-					this.output = this.output + command + '\n';
+					this.output += command + '\n';
 					break; // Break the for loop
 				}
 			}
@@ -53,16 +53,18 @@ var app = new Vue({
 				this.output += 'Disconnected\n';
 			}
 
-			if(connection) {
-				connection.sendCommand(command);
-			}
-			else {
-				this.output += 'Not Connected\n';
-			}
-
 			// Keep textarea scrolled to the bottom
 			var otpt = document.getElementById('output');
 			otpt.scrollTop = otpt.scrollHeight;
+		},
+		//can probably merge this with the above sendCommand function.
+		sendValues: function() {
+			if(connection) {
+				connection.sendCommand(this.input);
+			}
+			else {
+				this.output += 'Disconnected\n';
+			}
 		},
 		clearOutput: function() {
 			// Handle output clear button
@@ -89,7 +91,7 @@ var app = new Vue({
 			connection.on('close', function() {
 				self.output += 'Connection closed\n';
 				//modify label to be disconnected
-				self.isConnected = 'Connected';
+				self.isConnected = 'Disconnected';
 			});
 
 			connection.on('error', function() {
