@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 	  <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet">
-	  <link rel="stylesheet" href="style.css">
+	  <link rel="stylesheet" href="./styles/style.css">
   </head>
   <body>
     <div id="app" class="container">
@@ -31,7 +31,7 @@
 				<div v-for="value in commands" class="doors">
           <div v-if="value.type==='door'">
 					  <p>{{ value.name }}</p>
-					  <button v-on:click="value.isOpen=true, sendCommand(value)" class="btn btn-secondary btn-sm"><img src="icons8-Door Closed Filled-50.png"></button><button v-on:click="value.isOpen=false, sendCommand(value)" class="btn btn-secondary btn-sm"><img src="icons8-Door Opened Filled-50.png"></button>
+					  <button v-on:click="value.isOpen=true, sendCommand(value)" class="btn btn-secondary btn-sm"><img src="./assets/icons8-Door Closed Filled-50.png"></button><button v-on:click="value.isOpen=false, sendCommand(value)" class="btn btn-secondary btn-sm"><img src="./assets/icons8-Door Opened Filled-50.png"></button>
           </div>
         </div>
 			</div>
